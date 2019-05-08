@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTVFrontEnd", "HTVFrontEnd\HTVFrontEnd.csproj", "{F7576330-0AF8-41A0-8D09-63B80220A52C}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HTVDatabase", "HTVDatabase\HTVDatabase.sqlproj", "{B0FA4AB5-455B-401E-B50C-C23ACE9DF40D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7576330-0AF8-41A0-8D09-63B80220A52C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7576330-0AF8-41A0-8D09-63B80220A52C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7576330-0AF8-41A0-8D09-63B80220A52C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7576330-0AF8-41A0-8D09-63B80220A52C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0FA4AB5-455B-401E-B50C-C23ACE9DF40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0FA4AB5-455B-401E-B50C-C23ACE9DF40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0FA4AB5-455B-401E-B50C-C23ACE9DF40D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B0FA4AB5-455B-401E-B50C-C23ACE9DF40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0FA4AB5-455B-401E-B50C-C23ACE9DF40D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0FA4AB5-455B-401E-B50C-C23ACE9DF40D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B7EA660-522A-4409-AF62-59CEA106BB8D}
+	EndGlobalSection
+EndGlobal
