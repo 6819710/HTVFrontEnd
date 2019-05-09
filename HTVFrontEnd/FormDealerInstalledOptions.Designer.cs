@@ -41,6 +41,7 @@ namespace HTVFrontEnd
             this.text_optId = new System.Windows.Forms.TextBox();
             this.text_optDes = new System.Windows.Forms.TextBox();
             this.text_optCost = new System.Windows.Forms.TextBox();
+            this.btn_update_insert = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_next
@@ -51,6 +52,7 @@ namespace HTVFrontEnd
             this.btn_next.TabIndex = 0;
             this.btn_next.Text = "Next";
             this.btn_next.UseVisualStyleBackColor = true;
+            this.btn_next.Click += new System.EventHandler(this.btn_next_Click);
             // 
             // btn_prev
             // 
@@ -60,6 +62,7 @@ namespace HTVFrontEnd
             this.btn_prev.TabIndex = 1;
             this.btn_prev.Text = "Previous";
             this.btn_prev.UseVisualStyleBackColor = true;
+            this.btn_prev.Click += new System.EventHandler(this.btn_prev_Click);
             // 
             // btn_new
             // 
@@ -69,6 +72,7 @@ namespace HTVFrontEnd
             this.btn_new.TabIndex = 2;
             this.btn_new.Text = "New";
             this.btn_new.UseVisualStyleBackColor = true;
+            this.btn_new.Click += new System.EventHandler(this.btn_new_Click);
             // 
             // lbl_optId
             // 
@@ -119,11 +123,22 @@ namespace HTVFrontEnd
             this.text_optCost.Size = new System.Drawing.Size(503, 20);
             this.text_optCost.TabIndex = 8;
             // 
+            // btn_update_insert
+            // 
+            this.btn_update_insert.Location = new System.Drawing.Point(440, 13);
+            this.btn_update_insert.Name = "btn_update_insert";
+            this.btn_update_insert.Size = new System.Drawing.Size(75, 23);
+            this.btn_update_insert.TabIndex = 9;
+            this.btn_update_insert.Text = "Update";
+            this.btn_update_insert.UseVisualStyleBackColor = true;
+            this.btn_update_insert.Click += new System.EventHandler(this.btn_update_insert_Click);
+            // 
             // FormDealerInstalledOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 392);
+            this.Controls.Add(this.btn_update_insert);
             this.Controls.Add(this.text_optCost);
             this.Controls.Add(this.text_optDes);
             this.Controls.Add(this.text_optId);
@@ -151,5 +166,6 @@ namespace HTVFrontEnd
         private System.Windows.Forms.TextBox text_optId;
         private System.Windows.Forms.TextBox text_optDes;
         private System.Windows.Forms.TextBox text_optCost;
+        private System.Windows.Forms.Button btn_update_insert;
     }
 }

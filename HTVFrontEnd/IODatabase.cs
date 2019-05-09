@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace HTVFrontEnd
 {
@@ -35,6 +36,11 @@ namespace HTVFrontEnd
             return result;
         }
 
+        /// <summary>
+        /// Fetches data from database
+        /// </summary>
+        /// <param name="form">Name of form, used for formatting sql statements.</param>
+        /// <returns>Formatted table of strings. TODO: alter to list of tables. (for multi select methods)</returns>
         public List<List<string>> FetchData(string form)
         {
             string sql = "";
@@ -51,6 +57,45 @@ namespace HTVFrontEnd
             List<List<string>> result = FormatData(data);
             _dbConnection.Close();
 
+            return result;
+        }
+
+        /// <summary>
+        /// Writes data to database
+        /// </summary>
+        /// <param name="data">table of data to be written (data is assumed to be formed into correct arrangement)</param>
+        /// <returns>true if susccessful </returns>
+        public bool WriteData(string form, List<string> data)
+        {
+            string sql = "";
+            SqlCommand command;
+            bool result;
+
+            if (form == "dealerinstalledoptions")
+            {
+                if (data.Count >= 3) // Known data format is option_id, option_description, option_base_cost; therefore data should contain at least 3 values
+                    sql = "INSERT INTO [dbo].[DealerInstalledOptions] ([option_id],[option_description],[option_base_cost]) VALUES (" + data[0] + ",'" + data[1] + "'," + data[2] + ")";
+                else
+                    return false;
+            }
+
+            command = new SqlCommand(sql, _dbConnection);
+
+            try
+            {
+                _dbConnection.Open();
+                command.ExecuteNonQuery();
+                result = true;
+            }
+            catch(SqlException e)
+            {
+                MessageBox.Show(e.Message.ToString(), "Error Message: ");
+                result = false;
+            }
+            finally
+            {
+                _dbConnection.Close();
+            }
             return result;
         }
     }
