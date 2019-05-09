@@ -14,11 +14,9 @@ namespace HTVFrontEnd
         [STAThread]
         static void Main()
         {
-            IODatabase testConnection = new IODatabase(".\\SQLEXPRESS", "HTVDatabase");
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormDealerInstalledOptions());
+            Application.Run(new FormMain());
         }
     }
 }
