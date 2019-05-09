@@ -16,14 +16,19 @@ namespace HTVFrontEnd
         {
             // set sql connection.
             // assume windows credentials for login
-            _dbConnection = new SqlConnection("Server="+server+";Database="+database+";Trusted_Connection=true");
+            _dbConnection = new SqlConnection("Server=" + server + ";Database=" + database + ";Trusted_Connection=true");
 
             // test sql connection.
             _dbConnection.Open();
             _dbConnection.Close();
         }
 
-        private List<List<string>> FormatData (SqlDataReader data)
+        /// <summary>
+        /// Formats Data into table
+        /// </summary>
+        /// <param name="data">Data reader from SQL statement</param>
+        /// <returns></returns>
+        private List<List<string>> FormatData(SqlDataReader data)
         {
             List<List<string>> result = new List<List<string>>();
             while (data.Read())
@@ -45,7 +50,7 @@ namespace HTVFrontEnd
         {
             string sql = "";
             SqlCommand command;
-            
+
             // Generate sql statement
             if (form == "dealerinstalledoptions")
                 sql = "SELECT [option_id],[option_description],[option_base_cost] FROM[HTVDatabase].[dbo].[DealerInstalledOptions]";
@@ -72,12 +77,8 @@ namespace HTVFrontEnd
             bool result;
 
             if (form == "dealerinstalledoptions")
-            {
                 if (data.Count >= 3) // Known data format is option_id, option_description, option_base_cost; therefore data should contain at least 3 values
                     sql = "INSERT INTO [dbo].[DealerInstalledOptions] ([option_id],[option_description],[option_base_cost]) VALUES (" + data[0] + ",'" + data[1] + "'," + data[2] + ")";
-                else
-                    return false;
-            }
 
             command = new SqlCommand(sql, _dbConnection);
 
@@ -87,7 +88,41 @@ namespace HTVFrontEnd
                 command.ExecuteNonQuery();
                 result = true;
             }
-            catch(SqlException e)
+            catch (SqlException e)
+            {
+                MessageBox.Show(e.Message.ToString(), "Error Message: ");
+                result = false;
+            }
+            finally
+            {
+                _dbConnection.Close();
+            }
+            return result;
+        }
+
+        public bool UpdateData(string form, List<string> primaryKey, List<string> data)
+        {
+            string sql = "";
+            SqlCommand command;
+            bool result = false;
+
+            if (form == "dealerinstalledoptions")
+                if (primaryKey.Count >= 1) // expecting single primary key
+                    if (data.Count >= 3) // Known data format is option_id, option_description, option_base_cost; therefore data should contain at least 3 values
+                        sql = "UPDATE [dbo].[DealerInstalledOptions] SET [option_id] = " + data[0] +
+                            ",[option_description] = '" + data[1] + "'" +
+                            ",[option_base_cost] = " + data[2] +
+                            " WHERE [option_id] = " + primaryKey[0];
+
+            command = new SqlCommand(sql, _dbConnection);
+
+            try
+            {
+                _dbConnection.Open();
+                command.ExecuteNonQuery();
+                result = true;
+            }
+            catch (SqlException e)
             {
                 MessageBox.Show(e.Message.ToString(), "Error Message: ");
                 result = false;

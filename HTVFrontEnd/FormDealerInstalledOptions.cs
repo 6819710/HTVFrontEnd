@@ -15,6 +15,7 @@ namespace HTVFrontEnd
         private IODatabase _databaseConnection;
         private int _row;
         private bool _updateFlag;
+        private string _primaryKey;
 
         public FormDealerInstalledOptions()
         {
@@ -28,6 +29,7 @@ namespace HTVFrontEnd
             text_optId.Text = formData[_row][0];
             text_optDes.Text = formData[_row][1];
             text_optCost.Text = formData[_row][2];
+            _primaryKey = formData[_row][0];
 
             // Disable Previous & Next if only one row
             btn_prev.Enabled = false;
@@ -44,6 +46,7 @@ namespace HTVFrontEnd
             text_optId.Text = "";
             text_optDes.Text = "";
             text_optCost.Text = "";
+            _primaryKey = "";
 
             // Change update button to add button
             btn_update_insert.Text = "Add";
@@ -65,6 +68,7 @@ namespace HTVFrontEnd
             _row++;
 
             List<List<string>> formData = _databaseConnection.FetchData("dealerinstalledoptions");
+            _primaryKey = formData[_row][0];
             text_optId.Text = formData[_row][0];
             text_optDes.Text = formData[_row][1];
             text_optCost.Text = formData[_row][2];
@@ -91,6 +95,7 @@ namespace HTVFrontEnd
             text_optId.Text = formData[_row][0];
             text_optDes.Text = formData[_row][1];
             text_optCost.Text = formData[_row][2];
+            _primaryKey = formData[_row][0];
 
             if (_row == 0) // check if there is previous
                 btn_prev.Enabled = false;
@@ -108,10 +113,28 @@ namespace HTVFrontEnd
             row.Add(text_optDes.Text);
             row.Add(text_optCost.Text);
 
+            List<string> primaryKey = new List<string>();
+            primaryKey.Add(_primaryKey);
+
 
             if (_updateFlag) // If update mode
             {
-                // TODO: Enable Update
+                if (_databaseConnection.UpdateData("dealerinstalledoptions", primaryKey, row))
+                {
+                    // Reload data, TODO: Streamline this for performance?
+                    List<List<string>> formData = _databaseConnection.FetchData("dealerinstalledoptions");
+                    text_optId.Text = formData[_row][0];
+                    text_optDes.Text = formData[_row][1];
+                    text_optCost.Text = formData[_row][2];
+                    _primaryKey = formData[_row][0];
+
+                    // Show success
+                    MessageBox.Show("Dealer option succefully updated.");
+                }
+                else
+                {
+                    //TODO: on update failure
+                }
             }
             else // Add Mode
             {
@@ -125,6 +148,8 @@ namespace HTVFrontEnd
                     text_optId.Text = formData[_row][0];
                     text_optDes.Text = formData[_row][1];
                     text_optCost.Text = formData[_row][2];
+                    _primaryKey = formData[_row][0];
+
                     if (_row > 0) // check if there is previous
                         btn_prev.Enabled = true;
                     btn_next.Enabled = false;
@@ -137,7 +162,10 @@ namespace HTVFrontEnd
                     // Show success
                     MessageBox.Show("New Dealer Option sucessfully added.");
                 }
-
+                else
+                {
+                    //TODO: on write failure
+                }
             }
         }
     }
