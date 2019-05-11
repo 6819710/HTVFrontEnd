@@ -16,5 +16,10 @@ namespace HTVFrontEnd
         {
             InitializeComponent();
         }
+
+        private void FormVehicles_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
