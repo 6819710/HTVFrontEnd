@@ -12,7 +12,7 @@ namespace HTVFrontEnd
 {
     public partial class FormDealerInstalledOptions : Form
     {
-        private IODatabase _databaseConnection;
+        private IODatabase _database;
         private int _row;
         private bool _updateFlag;
         private string _primaryKey;
@@ -21,15 +21,18 @@ namespace HTVFrontEnd
         {
             InitializeComponent();
 
-            _databaseConnection = new IODatabase(".\\SQLEXPRESS", "HTVDatabase");
+            _database = new IODatabase(".\\SQLEXPRESS", "HTVDatabase");
             _row = 0;
 
             // Load first row
-            List<List<string>> formData = _databaseConnection.FetchData("dealerinstalledoptions");
-            text_optId.Text = formData[_row][0];
-            text_optDes.Text = formData[_row][1];
-            text_optCost.Text = formData[_row][2];
-            _primaryKey = formData[_row][0];
+            List<List<string>> formData = _database.FetchData("dealerinstalledoptions");
+            if (formData.Count >= _row)
+            {
+                text_optId.Text = formData[_row][0];
+                text_optDes.Text = formData[_row][1];
+                text_optCost.Text = formData[_row][2];
+                _primaryKey = formData[_row][0];
+            }
 
             // Disable Previous & Next if only one row
             btn_prev.Enabled = false;
@@ -67,7 +70,7 @@ namespace HTVFrontEnd
             // Increment row and fetch next
             _row++;
 
-            List<List<string>> formData = _databaseConnection.FetchData("dealerinstalledoptions");
+            List<List<string>> formData = _database.FetchData("dealerinstalledoptions");
             _primaryKey = formData[_row][0];
             text_optId.Text = formData[_row][0];
             text_optDes.Text = formData[_row][1];
@@ -82,6 +85,7 @@ namespace HTVFrontEnd
             if (_row == 0) // on re-entering data set reset update button.
             {
                 btn_update_insert.Text = "Update";
+                btn_new.Enabled = true;
                 _updateFlag = true;
             }
         }
@@ -91,7 +95,7 @@ namespace HTVFrontEnd
             // Decrement row and fetch previous
             _row--;
 
-            List<List<string>> formData = _databaseConnection.FetchData("dealerinstalledoptions");
+            List<List<string>> formData = _database.FetchData("dealerinstalledoptions");
             text_optId.Text = formData[_row][0];
             text_optDes.Text = formData[_row][1];
             text_optCost.Text = formData[_row][2];
@@ -119,10 +123,10 @@ namespace HTVFrontEnd
 
             if (_updateFlag) // If update mode
             {
-                if (_databaseConnection.UpdateData("dealerinstalledoptions", primaryKey, row))
+                if (_database.UpdateData("dealerinstalledoptions", primaryKey, row))
                 {
                     // Reload data, TODO: Streamline this for performance?
-                    List<List<string>> formData = _databaseConnection.FetchData("dealerinstalledoptions");
+                    List<List<string>> formData = _database.FetchData("dealerinstalledoptions");
                     text_optId.Text = formData[_row][0];
                     text_optDes.Text = formData[_row][1];
                     text_optCost.Text = formData[_row][2];
@@ -139,10 +143,10 @@ namespace HTVFrontEnd
             else // Add Mode
             {
                 // Add data to database
-                if (_databaseConnection.WriteData("dealerinstalledoptions", row))
+                if (_database.WriteData("dealerinstalledoptions", row))
                 {
                     // Switch view to newly added data
-                    List<List<string>> formData = _databaseConnection.FetchData("dealerinstalledoptions");
+                    List<List<string>> formData = _database.FetchData("dealerinstalledoptions");
                     _row = formData.Count - 1;
 
                     text_optId.Text = formData[_row][0];

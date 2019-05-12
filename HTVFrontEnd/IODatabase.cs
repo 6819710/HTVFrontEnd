@@ -53,7 +53,9 @@ namespace HTVFrontEnd
 
             // Generate sql statement
             if (form == "dealerinstalledoptions")
-                sql = "SELECT [option_id],[option_description],[option_base_cost] FROM[HTVDatabase].[dbo].[DealerInstalledOptions]";
+                sql = "SELECT [option_id],[option_description],[option_base_cost] FROM [HTVDatabase].[dbo].[DealerInstalledOptions]";
+            if (form == "vehicles")
+                sql = "SELECT [serial_number],[name],[model],[year],[manufacturer],[base_cost] FROM [HTVDatabase].[dbo].[Vehicles]";
 
             // Execute sql statement and format data
             _dbConnection.Open();
@@ -77,9 +79,11 @@ namespace HTVFrontEnd
             bool result;
 
             if (form == "dealerinstalledoptions")
-                if (data.Count >= 3) // Known data format is option_id, option_description, option_base_cost; therefore data should contain at least 3 values
-                    sql = "INSERT INTO [dbo].[DealerInstalledOptions] ([option_id],[option_description],[option_base_cost]) VALUES (" + data[0] + ",'" + data[1] + "'," + data[2] + ")";
+                sql = "INSERT INTO [dbo].[DealerInstalledOptions] ([option_id],[option_description],[option_base_cost]) VALUES (" + data[0] + ",'" + data[1] + "'," + data[2] + ")";
 
+            if (form == "vehicles")
+                sql = "INSERT INTO[dbo].[Vehicles]([serial_number],[name],[model],[year],[manufacturer],[base_cost]) VALUES (" + data[0] + ",'" + data[1] + "','" + data[2] + "'," + data[3] + ",'" + data[4] + "'," + data[5] + ")";
+             
             command = new SqlCommand(sql, _dbConnection);
 
             try
@@ -100,6 +104,13 @@ namespace HTVFrontEnd
             return result;
         }
 
+        /// <summary>
+        /// Updates a given row in the table.
+        /// </summary>
+        /// <param name="form">Form refernce describing what SQL statement to run</param>
+        /// <param name="primaryKey">Primary key or row</param>
+        /// <param name="data">Data for row to be updated to.</param>
+        /// <returns></returns>
         public bool UpdateData(string form, List<string> primaryKey, List<string> data)
         {
             string sql = "";
