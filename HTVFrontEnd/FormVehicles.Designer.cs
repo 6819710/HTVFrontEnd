@@ -44,6 +44,7 @@
             this.text_year = new System.Windows.Forms.TextBox();
             this.text_model = new System.Windows.Forms.TextBox();
             this.text_make = new System.Windows.Forms.TextBox();
+            this.lbl_sold = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_prev
@@ -182,11 +183,21 @@
             this.text_make.Size = new System.Drawing.Size(221, 20);
             this.text_make.TabIndex = 18;
             // 
+            // lbl_sold
+            // 
+            this.lbl_sold.AutoSize = true;
+            this.lbl_sold.Location = new System.Drawing.Point(110, 17);
+            this.lbl_sold.Name = "lbl_sold";
+            this.lbl_sold.Size = new System.Drawing.Size(97, 13);
+            this.lbl_sold.TabIndex = 19;
+            this.lbl_sold.Text = "SOLD / AVALIBLE";
+            // 
             // FormVehicles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(550, 179);
+            this.Controls.Add(this.lbl_sold);
             this.Controls.Add(this.text_make);
             this.Controls.Add(this.text_model);
             this.Controls.Add(this.text_year);
@@ -228,5 +239,6 @@
         private System.Windows.Forms.TextBox text_year;
         private System.Windows.Forms.TextBox text_model;
         private System.Windows.Forms.TextBox text_make;
+        private System.Windows.Forms.Label lbl_sold;
     }
 }

@@ -25,8 +25,16 @@ namespace HTVFrontEnd
             _row = 0;
 
             // Load first row
+            LoadData();
+
+            _updateFlag = true;
+        }
+
+        private void LoadData()
+        {
             List<List<string>> formData = _database.FetchData("vehicles");
-            if(formData.Count >= _row)
+            int rows = formData.Count;
+            if (formData.Count >= _row)
             {
                 text_serialNumber.Text = formData[_row][0];
                 text_name.Text = formData[_row][1];
@@ -35,14 +43,33 @@ namespace HTVFrontEnd
                 text_make.Text = formData[_row][4];
                 text_baseCost.Text = formData[_row][5];
                 _primaryKey = formData[_row][0];
+
+                // determined if avalible
+                List<string> primaryKey = new List<string>();
+                primaryKey.Add(_primaryKey);
+                formData = _database.FetchData("vehicles", primaryKey);
+
+                if (formData.Count > 0) // vehicle is sold because there is an invoice with vehicle avalible
+                {
+                    lbl_sold.Text = "SOLD";
+                    lbl_sold.ForeColor = Color.Red;
+                }
+                else
+                {
+                    lbl_sold.Text = "AVALIBE";
+                    lbl_sold.ForeColor = Color.Green;
+                }
             }
 
-            // Disable Previous & Next if only one row
-            btn_prev.Enabled = false;
-            if (formData.Count == _row + 1)
-                btn_next.Enabled = false;
+            if (_row == 0) // check if there is previous
+                btn_prev.Enabled = false;
+            else
+                btn_prev.Enabled = true;
 
-            _updateFlag = true;
+            if (rows > _row + 1) //check if remaining next's
+                btn_next.Enabled = true;
+            else
+                btn_next.Enabled = false;
         }
 
         private void btn_new_Click(object sender, EventArgs e)
@@ -54,6 +81,7 @@ namespace HTVFrontEnd
             text_year.Text = "";
             text_make.Text = "";
             text_baseCost.Text = "";
+            lbl_sold.Text = "";
 
             // Change update button to add button.
             btn_updateInsert.Text = "Add";
@@ -95,17 +123,7 @@ namespace HTVFrontEnd
                     List<List<string>> formData = _database.FetchData("vehicles");
                     _row = formData.Count - 1;
 
-                    text_serialNumber.Text = formData[_row][0];
-                    text_name.Text = formData[_row][1];
-                    text_model.Text = formData[_row][2];
-                    text_year.Text = formData[_row][3];
-                    text_make.Text = formData[_row][4];
-                    text_baseCost.Text = formData[_row][5];
-                    _primaryKey = formData[_row][0];
-
-                    if (_row > 0) // check if there is previous
-                        btn_prev.Enabled = true;
-                    btn_next.Enabled = false;
+                    LoadData();
 
                     // Re-enable new button & change to update button.
                     btn_new.Enabled = true;
@@ -126,49 +144,17 @@ namespace HTVFrontEnd
         {
             // Decrement row and fetch previous
             _row--;
-
-            List<List<string>> formData = _database.FetchData("vehicles");
-            text_serialNumber.Text = formData[_row][0];
-            text_name.Text = formData[_row][1];
-            text_model.Text = formData[_row][2];
-            text_year.Text = formData[_row][3];
-            text_make.Text = formData[_row][4];
-            text_baseCost.Text = formData[_row][5];
-            _primaryKey = formData[_row][0];
-
-            if (_row == 0) // check if there is previous
-                btn_prev.Enabled = false;
-
-            if (formData.Count > _row + 1) //check if remaining next's
-                btn_next.Enabled = true;
+            LoadData();
         }
 
         private void btn_next_Click(object sender, EventArgs e)
         {
             // Decrement row and fetch previous
             _row++;
+            LoadData();
 
-            List<List<string>> formData = _database.FetchData("vehicles");
-            text_serialNumber.Text = formData[_row][0];
-            text_name.Text = formData[_row][1];
-            text_model.Text = formData[_row][2];
-            text_year.Text = formData[_row][3];
-            text_make.Text = formData[_row][4];
-            text_baseCost.Text = formData[_row][5];
-            _primaryKey = formData[_row][0];
-
-            if (_row > 0) // check if there is previous
-                btn_prev.Enabled = true;
-
-            if (formData.Count == _row + 1) //check if remaining next's
-                btn_next.Enabled = false;
-
-            if (_row == 0) // on re-entering data set reset update button.
-            {
+            if (_row == 0)
                 btn_updateInsert.Text = "Update";
-                btn_new.Enabled = true;
-                _updateFlag = true;
-            }
         }
     }
 }

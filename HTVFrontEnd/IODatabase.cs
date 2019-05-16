@@ -87,9 +87,11 @@ namespace HTVFrontEnd
             if (form == "sales_agent")
                 sql = "SELECT [name] FROM [HTVDatabase].[dbo].[Staff] WHERE ([staff_id] = " + primaryKey[3] + ")";
             if (form == "sales_dealerInstalled")
-                sql = "SELECT TOP (1000) Opt.[option_id], Opt.[option_description], Opt.[option_base_cost] FROM [HTVDatabase].[dbo].[DealerInstalledOptions] AS Opt WHERE(Opt.[option_id] IN(SELECT Sal.[option_id] FROM[HTVDatabase].[dbo].[DealerInstalledOptionsSales] AS Sal WHERE(Sal.[invoice_id] = " + primaryKey[0] + ")))";
+                sql = "SELECT Opt.[option_id], Opt.[option_description], Opt.[option_base_cost] FROM [HTVDatabase].[dbo].[DealerInstalledOptions] AS Opt WHERE(Opt.[option_id] IN(SELECT Sal.[option_id] FROM[HTVDatabase].[dbo].[DealerInstalledOptionsSales] AS Sal WHERE(Sal.[invoice_id] = " + primaryKey[0] + ")))";
             if (form == "sales_tradeIn")
                 sql = "";
+            if (form == "vehicles")
+                sql = "SELECT [invoice_id] FROM [HTVDatabase].[dbo].[Sales] WHERE ([purchaced_vehicle] = " + primaryKey[0] + ")";
 
             // Execute sql statement and format data
             _dbConnection.Open();
