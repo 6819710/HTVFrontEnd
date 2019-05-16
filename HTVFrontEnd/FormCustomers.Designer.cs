@@ -41,14 +41,14 @@
             this.lbl_phoneSecondary = new System.Windows.Forms.Label();
             this.text_phonePrimary = new System.Windows.Forms.TextBox();
             this.text_phoneSecondary = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.lbl_history = new System.Windows.Forms.Label();
+            this.data_purchaceHist = new System.Windows.Forms.DataGridView();
             this.col_saleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_vehicle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_staff = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.lbl_history = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.data_purchaceHist)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_prev
@@ -161,28 +161,19 @@
             this.text_phoneSecondary.Size = new System.Drawing.Size(248, 20);
             this.text_phoneSecondary.TabIndex = 12;
             // 
-            // dataGridView1
+            // data_purchaceHist
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.data_purchaceHist.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.data_purchaceHist.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_saleID,
             this.col_date,
             this.col_vehicle,
             this.col_price,
             this.col_staff});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 146);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(675, 263);
-            this.dataGridView1.TabIndex = 13;
-            // 
-            // lbl_history
-            // 
-            this.lbl_history.AutoSize = true;
-            this.lbl_history.Location = new System.Drawing.Point(12, 130);
-            this.lbl_history.Name = "lbl_history";
-            this.lbl_history.Size = new System.Drawing.Size(88, 13);
-            this.lbl_history.TabIndex = 14;
-            this.lbl_history.Text = "Purchace History";
+            this.data_purchaceHist.Location = new System.Drawing.Point(12, 146);
+            this.data_purchaceHist.Name = "data_purchaceHist";
+            this.data_purchaceHist.Size = new System.Drawing.Size(675, 263);
+            this.data_purchaceHist.TabIndex = 13;
             // 
             // col_saleID
             // 
@@ -214,13 +205,22 @@
             this.col_staff.Name = "col_staff";
             this.col_staff.ReadOnly = true;
             // 
+            // lbl_history
+            // 
+            this.lbl_history.AutoSize = true;
+            this.lbl_history.Location = new System.Drawing.Point(12, 130);
+            this.lbl_history.Name = "lbl_history";
+            this.lbl_history.Size = new System.Drawing.Size(88, 13);
+            this.lbl_history.TabIndex = 14;
+            this.lbl_history.Text = "Purchace History";
+            // 
             // FormCustomers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(699, 450);
             this.Controls.Add(this.lbl_history);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.data_purchaceHist);
             this.Controls.Add(this.text_phoneSecondary);
             this.Controls.Add(this.text_phonePrimary);
             this.Controls.Add(this.lbl_phoneSecondary);
@@ -236,7 +236,7 @@
             this.Controls.Add(this.btn_prev);
             this.Name = "FormCustomers";
             this.Text = "FormCustomers";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data_purchaceHist)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,7 +257,7 @@
         private System.Windows.Forms.Label lbl_phoneSecondary;
         private System.Windows.Forms.TextBox text_phonePrimary;
         private System.Windows.Forms.TextBox text_phoneSecondary;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView data_purchaceHist;
         private System.Windows.Forms.Label lbl_history;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_saleID;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_date;

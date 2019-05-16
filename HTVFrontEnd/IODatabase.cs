@@ -56,6 +56,8 @@ namespace HTVFrontEnd
                 sql = "SELECT [option_id],[option_description],[option_base_cost] FROM [HTVDatabase].[dbo].[DealerInstalledOptions]";
             if (form == "vehicles")
                 sql = "SELECT [serial_number],[name],[model],[year],[manufacturer],[base_cost] FROM [HTVDatabase].[dbo].[Vehicles]";
+            if (form == "customers")
+                sql = "SELECT [customer_id],[name],[address],[phone_number_primary],[phone_number_secondary] FROM [HTVDatabase].[dbo].[Customers]";
 
             // Execute sql statement and format data
             _dbConnection.Open();
@@ -67,12 +69,34 @@ namespace HTVFrontEnd
             return result;
         }
 
-        /// <summary>
-        /// Writes data to database
-        /// </summary>
-        /// <param name="data">table of data to be written (data is assumed to be formed into correct arrangement)</param>
-        /// <returns>true if susccessful </returns>
-        public bool WriteData(string form, List<string> data)
+
+        public List<List<string>> FetchData(string form, List<string> primaryKey)
+        {
+            string sql = "";
+            SqlCommand command;
+
+            // Generate sql statement
+            if (form == "customers")
+                sql = "SELECT [invoice_id],[date],[purchaced_vehicle],[purchace_price],[staff_id] FROM [HTVDatabase].[dbo].[Sales] WHERE ([customer_id] = " + primaryKey[0] + ")";
+
+
+
+            // Execute sql statement and format data
+            _dbConnection.Open();
+            command = new SqlCommand(sql, _dbConnection);
+            SqlDataReader data = command.ExecuteReader();
+            List<List<string>> result = FormatData(data);
+            _dbConnection.Close();
+
+            return result;
+        }
+
+            /// <summary>
+            /// Writes data to database
+            /// </summary>
+            /// <param name="data">table of data to be written (data is assumed to be formed into correct arrangement)</param>
+            /// <returns>true if susccessful </returns>
+            public bool WriteData(string form, List<string> data)
         {
             string sql = "";
             SqlCommand command;
