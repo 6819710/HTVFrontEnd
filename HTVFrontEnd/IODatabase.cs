@@ -58,6 +58,8 @@ namespace HTVFrontEnd
                 sql = "SELECT [serial_number],[name],[model],[year],[manufacturer],[base_cost] FROM [HTVDatabase].[dbo].[Vehicles]";
             if (form == "customers")
                 sql = "SELECT [customer_id],[name],[address],[phone_number_primary],[phone_number_secondary] FROM [HTVDatabase].[dbo].[Customers]";
+            if (form == "sales")
+                sql = "SELECT [invoice_id],[date],[customer_id],[purchaced_vehicle],[purchace_price],[signature],[staff_id] FROM [HTVDatabase].[dbo].[Sales]";
 
             // Execute sql statement and format data
             _dbConnection.Open();
@@ -78,8 +80,16 @@ namespace HTVFrontEnd
             // Generate sql statement
             if (form == "customers")
                 sql = "SELECT [invoice_id],[date],[purchaced_vehicle],[purchace_price],[staff_id] FROM [HTVDatabase].[dbo].[Sales] WHERE ([customer_id] = " + primaryKey[0] + ")";
-
-
+            if (form == "sales_customer")
+                sql = "SELECT [name],[address],[phone_number_primary],[phone_number_secondary] FROM [HTVDatabase].[dbo].[Customers] where ([customer_id] = " + primaryKey[1] + ")";
+            if (form == "sales_vehicle")
+                sql = "SELECT [name],[manufacturer],[model],[base_cost],[year] FROM [HTVDatabase].[dbo].[Vehicles] WHERE ([serial_number] = " + primaryKey[2] + ")";
+            if (form == "sales_agent")
+                sql = "SELECT [name] FROM [HTVDatabase].[dbo].[Staff] WHERE ([staff_id] = " + primaryKey[3] + ")";
+            if (form == "sales_dealerInstalled")
+                sql = "SELECT TOP (1000) Opt.[option_id], Opt.[option_description], Opt.[option_base_cost] FROM [HTVDatabase].[dbo].[DealerInstalledOptions] AS Opt WHERE(Opt.[option_id] IN(SELECT Sal.[option_id] FROM[HTVDatabase].[dbo].[DealerInstalledOptionsSales] AS Sal WHERE(Sal.[invoice_id] = " + primaryKey[0] + ")))";
+            if (form == "sales_tradeIn")
+                sql = "";
 
             // Execute sql statement and format data
             _dbConnection.Open();
@@ -91,12 +101,12 @@ namespace HTVFrontEnd
             return result;
         }
 
-            /// <summary>
-            /// Writes data to database
-            /// </summary>
-            /// <param name="data">table of data to be written (data is assumed to be formed into correct arrangement)</param>
-            /// <returns>true if susccessful </returns>
-            public bool WriteData(string form, List<string> data)
+        /// <summary>
+        /// Writes data to database
+        /// </summary>
+        /// <param name="data">table of data to be written (data is assumed to be formed into correct arrangement)</param>
+        /// <returns>true if susccessful </returns>
+        public bool WriteData(string form, List<string> data)
         {
             string sql = "";
             SqlCommand command;
